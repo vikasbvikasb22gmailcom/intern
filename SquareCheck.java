@@ -2,7 +2,7 @@ import java.util.*;
 
 class SquareCheck {
 
-    // function to calculate squared distance
+    
     static int distSq(int x1, int y1, int x2, int y2) {
         return (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1);
     }
@@ -11,7 +11,7 @@ class SquareCheck {
 
         int[] d = new int[6];
 
-        // all 6 pair distances
+       
         d[0] = distSq(p1[0], p1[1], p2[0], p2[1]);
         d[1] = distSq(p1[0], p1[1], p3[0], p3[1]);
         d[2] = distSq(p1[0], p1[1], p4[0], p4[1]);
@@ -21,7 +21,7 @@ class SquareCheck {
 
         Arrays.sort(d);
 
-        // first 4 equal sides and last 2 equal diagonals
+       
         return d[0] > 0 &&
                d[0] == d[1] &&
                d[1] == d[2] &&
@@ -42,3 +42,4 @@ class SquareCheck {
             System.out.println("No");
     }
 }
+
