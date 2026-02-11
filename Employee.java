@@ -11,8 +11,9 @@ public class Employee {
     
     public static void main(String[] args) {
 
-        Employee e = new Employee();   // create object
+        Employee e = new Employee();   
 
-        System.out.println("Salary = " + e.get_sal());  // print salary
+        System.out.println("Salary = " + e.get_sal());  
     }
 }
+
