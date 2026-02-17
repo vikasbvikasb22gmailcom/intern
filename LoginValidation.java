@@ -5,7 +5,7 @@ class LoginValidation {
 
         Scanner sc = new Scanner(System.in);
 
-        int attempts = 0;   // counter for login tries
+        int attempts = 0; 
         String username;
         String password;
 
@@ -17,10 +17,10 @@ class LoginValidation {
             System.out.print("Enter Password: ");
             password = sc.nextLine();
 
-            // check login
+           
             if (username.equals("admin") && password.equals("1234")) {
                 System.out.println("Login Successful");
-                return;   // exit program
+                return;   
             } 
             else {
                 attempts++;
@@ -29,7 +29,8 @@ class LoginValidation {
             }
         }
 
-        // after 3 wrong attempts
+      
         System.out.println("Account Blocked!");
     }
 }
+
