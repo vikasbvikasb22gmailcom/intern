@@ -1,6 +1,9 @@
 CREATE SCHEMA company;
+
 CREATE DATABASE company;
+
 USE company;
+
 CREATE TABLE employee (
     empno INT PRIMARY KEY,
     ename VARCHAR(50),
@@ -11,6 +14,7 @@ CREATE TABLE employee (
     comm DECIMAL(10,2),
     deptno INT
 );
+
 INSERT INTO employee VALUES
 (8369,'SMITH','CLERK',8902,'1990-12-18',800,NULL,20),
 (8499,'ANYA','SALESMAN',8698,'1991-02-20',1600,300,30),
@@ -22,22 +26,29 @@ INSERT INTO employee VALUES
 (8888,'SCOTT','ANALYST',8566,'1992-12-09',3000,NULL,20),
 (8839,'AMIR','PRESIDENT',NULL,'1991-11-18',5000,NULL,10),
 (8844,'KULDEEP','SALESMAN',8698,'1991-09-08',1500,0,30);
+
 SELECT * FROM employee;
+
 SELECT ename, sal
 FROM employee
 WHERE sal >= 2000;
+
 SELECT *
 FROM employee
 WHERE comm IS NULL;
+
 SELECT ename, sal
 FROM employee
 WHERE sal NOT BETWEEN 2500 AND 4000;
+
 SELECT ename, job, sal
 FROM employee
 WHERE mgr IS NULL;
+
 SELECT ename
 FROM employee
 WHERE ename LIKE '__A%';
+
 SELECT ename
 FROM employee
 WHERE ename LIKE '%T';
