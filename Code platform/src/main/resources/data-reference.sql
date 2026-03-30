@@ -1,0 +1,3 @@
+-- This file is for reference only. Data is seeded via DataInitializer.java
+-- H2 console available at: http://localhost:8080/h2-console
+-- JDBC URL: jdbc:h2:file:./codearena-db
