@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing Cards</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: sans-serif;
+      background: #85d3c841;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .cards-wrap {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      max-width: 860px;
+      width: 100%;
+    }
+
+    /* Base card */
+    .card {
+      background: #a9a3a357;
+      border: 1px solid #e0e0e0;
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: #1bdf80;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Featured card */
+    .card.featured {
+      border: 2px solid #185FA5;
+    }
+
+    .card.featured:hover {
+      transform: translateY(-10px) scale(1.03);
+      border-color: #378ADD;
+      box-shadow: 0 16px 40px rgba(24, 95, 165, 0.15);
+    }
+
+    /* Badge */
+    .badge {
+      position: absolute;
+      top: -13px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #E6F1FB;
+      color: #185FA5;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 14px;
+      border-radius: 8px;
+      white-space: nowrap;
+      letter-spacing: 0.04em;
+    }
+
+    /* Icon box */
+    .plan-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Text */
+    .plan-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 4px;
+    }
+
+    .plan-desc {
+      font-size: 13px;
+      color: #777;
+    }
+
+    /* Price */
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .price-amount {
+      font-size: 36px;
+      font-weight: 600;
+      color: #1fd43d;
+      line-height: 1;
+    }
+
+    .price-period {
+      font-size: 13px;
+      color: #999;
+    }
+
+    /* Divider */
+    .divider {
+      border: none;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    /* Feature list */
+    .features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .features li {
+      font-size: 13px;
+      color: #555;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .features li .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* CTA Button */
+    .cta {
+      margin-top: auto;
+      padding: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background: transparent;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      color: #333;
+      width: 100%;
+      transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.15s ease;
+    }
+
+    .cta:hover {
+      background: #f4f4f4;
+      transform: scale(0.98);
+    }
+
+    .cta.featured-btn {
+      background: #185FA5;
+      color: #fff;
+      border-color: #185FA5;
+    }
+
+    .cta.featured-btn:hover {
+      background: #378ADD;
+      border-color: #378ADD;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cards-wrap">
+
+    <!-- Basic -->
+    <div class="card">
+      <div>
+        <div class="plan-icon" style="background:#f1efea;">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <rect x="3" y="10" width="4" height="7" rx="1" fill="#888780"/>
+            <rect x="8" y="6" width="4" height="11" rx="1" fill="#5F5E5A"/>
+            <rect x="13" y="2" width="4" height="15" rx="1" fill="#444441"/>
+          </svg>
+        </div>
+      </div>
+      <div>
+        <p class="plan-name">Basic</p>
+        <p class="plan-desc">For individuals just getting started.</p>
+      </div>
+      <div class="price-row">
+        <span class="price-amount">₹9</span>
+        <span class="price-period">/ month</span>
+      </div>
+      <hr class="divider">
+      <ul class="features">
+        <li><span class="dot" style="background:#888780;"></span>5 projects</li>
+        <li><span class="dot" style="background:#888780;"></span>2 GB storage</li>
+        <li><span class="dot" style="background:#888780;"></span>Email support</li>
+        <li><span class="dot" style="background:#888780;"></span>Basic analytics</li>
+      </ul>
+      <button class="cta">Get started</button>
+    </div>
+
+    <!-- Standard (Featured) -->
+    <div class="card featured">
+      <div class="badge">Most popular</div>
+      <div>
+        <div class="plan-icon" style="background:#E6F1FB;">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M10 2L12.4 7.6L18 8.5L14 12.4L15 18L10 15.3L5 18L6 12.4L2 8.5L7.6 7.6L10 2Z" fill="#185FA5"/>
+          </svg>
+        </div>
+      </div>
+      <div>
+        <p class="plan-name">Standard</p>
+        <p class="plan-desc">For growing teams that need more.</p>
+      </div>
+      <div class="price-row">
+        <span class="price-amount">₹29</span>
+        <span class="price-period">/ month</span>
+      </div>
+      <hr class="divider">
+      <ul class="features">
+        <li><span class="dot" style="background:#185FA5;"></span>25 projects</li>
+        <li><span class="dot" style="background:#185FA5;"></span>20 GB storage</li>
+        <li><span class="dot" style="background:#185FA5;"></span>Priority support</li>
+        <li><span class="dot" style="background:#185FA5;"></span>Advanced analytics</li>
+        <li><span class="dot" style="background:#185FA5;"></span>Team collaboration</li>
+      </ul>
+      <button class="cta featured-btn">Get started</button>
+    </div>
+
+    <!-- Premium -->
+    <div class="card">
+      <div>
+        <div class="plan-icon" style="background:#FAEEDA;">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <polygon points="10,2 13,8 19,8 14,12 16,18 10,14 4,18 6,12 1,8 7,8" fill="#BA7517"/>
+            <circle cx="10" cy="10" r="3" fill="#FAEEDA"/>
+          </svg>
+        </div>
+      </div>
+      <div>
+        <p class="plan-name">Premium</p>
+        <p class="plan-desc">For enterprises with advanced needs.</p>
+      </div>
+      <div class="price-row">
+        <span class="price-amount">₹79</span>
+        <span class="price-period">/ month</span>
+      </div>
+      <hr class="divider">
+      <ul class="features">
+        <li><span class="dot" style="background:#BA7517;"></span>Unlimited projects</li>
+        <li><span class="dot" style="background:#BA7517;"></span>200 GB storage</li>
+        <li><span class="dot" style="background:#BA7517;"></span>24/7 dedicated support</li>
+        <li><span class="dot" style="background:#BA7517;"></span>Custom analytics</li>
+        <li><span class="dot" style="background:#BA7517;"></span>SSO & admin controls</li>
+        <li><span class="dot" style="background:#BA7517;"></span>SLA guarantee</li>
+      </ul>
+      <button class="cta">Get started</button>
+    </div>
+
+  </div>
+
+</body>
+</html>
