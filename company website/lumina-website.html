@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lumina — Think Smarter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #0d0d0d; --cream: #f5f0e8; --gold: #c8a96e; --gold2: #e2c97e;
+      --muted: #7a7060; --card: #1a1812; --border: rgba(200,169,110,0.25);
+      --ff-head: 'Playfair Display', Georgia, serif;
+      --ff-body: 'DM Sans', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--ink); color: var(--cream); font-family: var(--ff-body); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.4rem 6vw; background: rgba(13,13,13,0.85); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); }
+    .logo { font-family: var(--ff-head); font-size: 1.5rem; letter-spacing: .05em; color: var(--gold); }
+    .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+    .nav-links a { color: var(--cream); text-decoration: none; font-size: .85rem; letter-spacing: .1em; text-transform: uppercase; opacity: .75; transition: opacity .2s; }
+    .nav-links a:hover { opacity: 1; color: var(--gold); }
+    .nav-cta { background: var(--gold); color: var(--ink); border: none; padding: .55rem 1.4rem; border-radius: 2px; font-family: var(--ff-body); font-size: .82rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 500; cursor: pointer; transition: background .2s, transform .15s; }
+    .nav-cta:hover { background: var(--gold2); transform: translateY(-1px); }
+
+    #hero { min-height: 100vh; display: grid; place-items: center; padding: 8rem 6vw 5rem; position: relative; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 60% 55% at 70% 40%, rgba(200,169,110,.12) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 20% 80%, rgba(200,169,110,.07) 0%, transparent 60%); }
+    
+    .hero-inner { position: relative; z-index: 1; text-align: center; max-width: 860px; }
+    .hero-badge { display: inline-block; border: 1px solid var(--gold); color: var(--gold); font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; padding: .38rem 1.1rem; border-radius: 100px; margin-bottom: 2rem; animation: fadeUp .8s ease both; }
+    .hero-h1 { font-family: var(--ff-head); font-size: clamp(3rem, 7vw, 6rem); font-weight: 900; line-height: 1.07; letter-spacing: -.02em; margin-bottom: 1.5rem; animation: fadeUp .9s .1s ease both; }
+    .hero-h1 em { font-style: normal; color: var(--gold); }
+    .hero-sub { font-size: 1.1rem; color: var(--muted); max-width: 520px; margin: 0 auto 2.8rem; animation: fadeUp 1s .2s ease both; }
+    .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeUp 1s .3s ease both; }
+    .btn-primary { background: var(--gold); color: var(--ink); border: none; padding: .9rem 2.2rem; font-family: var(--ff-body); font-size: .9rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: background .2s, transform .15s, box-shadow .2s; }
+    .btn-primary:hover { background: var(--gold2); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(200,169,110,.35); }
+    .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--cream); padding: .9rem 2.2rem; font-family: var(--ff-body); font-size: .9rem; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: border-color .2s, color .2s; }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+    .hero-stats { display: flex; gap: 3.5rem; justify-content: center; margin-top: 4.5rem; animation: fadeUp 1s .45s ease both; }
+    .stat-num { font-family: var(--ff-head); font-size: 2rem; color: var(--gold); }
+    .stat-label { font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+
+    section { padding: 7rem 6vw; }
+    .section-tag { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-bottom: .9rem; display: block; }
+    .section-title { font-family: var(--ff-head); font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; line-height: 1.15; margin-bottom: 1rem; }
+    .section-sub { color: var(--muted); max-width: 480px; font-size: 1rem; }
+    .divider { width: 48px; height: 2px; background: var(--gold); margin: 2rem 0 3rem; }
+
+    #features { background: #111009; }
+    .features-header { text-align: center; margin-bottom: 4rem; }
+    .features-header .section-sub { margin: 0 auto; }
+    .features-header .divider { margin: 2rem auto 0; }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5px; background: var(--border); border: 1px solid var(--border); }
+    .feature-card { background: #111009; padding: 2.8rem 2.2rem; transition: background .25s; position: relative; overflow: hidden; }
+    .feature-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform .35s ease; }
+    .feature-card:hover { background: var(--card); }
+    .feature-card:hover::before { transform: scaleX(1); }
+    .feature-icon { width: 52px; height: 52px; border: 1px solid var(--border); border-radius: 4px; display: grid; place-items: center; margin-bottom: 1.5rem; font-size: 1.4rem; transition: border-color .25s; }
+    .feature-card:hover .feature-icon { border-color: var(--gold); }
+    .feature-card h3 { font-family: var(--ff-head); font-size: 1.15rem; margin-bottom: .65rem; font-weight: 700; }
+    .feature-card p { color: var(--muted); font-size: .9rem; line-height: 1.7; }
+
+    #testimonials { background: var(--ink); }
+    .testimonials-header { text-align: center; margin-bottom: 3.5rem; }
+    .testimonials-header .section-sub { margin: 0 auto; }
+    .testimonials-header .divider { margin: 2rem auto 0; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+
+    
+    .testimonial-card { border: 1px solid var(--border); padding: 2.2rem; border-radius: 4px; background: var(--card); position: relative; transition: border-color .25s, transform .25s; }
+    .testimonial-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+    .quote-mark { font-family: var(--ff-head); font-size: 5rem; line-height: .5; color: var(--gold); opacity: .35; position: absolute; top: 1.4rem; right: 1.8rem; }
+    .testimonial-text { font-size: .95rem; color: #c5bfb0; line-height: 1.8; margin-bottom: 1.8rem; }
+    .testimonial-author { display: flex; align-items: center; gap: 1rem; }
+    .author-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), #7a5c28); display: grid; place-items: center; font-family: var(--ff-head); font-size: 1rem; color: var(--ink); font-weight: 700; flex-shrink: 0; }
+    .author-name { font-weight: 500; font-size: .9rem; }
+    .author-role { font-size: .78rem; color: var(--muted); }
+    .stars { color: var(--gold); font-size: .85rem; margin-bottom: 1.1rem; }
+
+    #pricing { background: #111009; }
+    .pricing-header { text-align: center; margin-bottom: 3.5rem; }
+    .pricing-header .section-sub { margin: 0 auto; }
+    .pricing-header .divider { margin: 2rem auto 0; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; max-width: 980px; margin: 0 auto; }
+    .pricing-card { border: 1px solid var(--border); padding: 2.5rem 2rem; border-radius: 4px; background: var(--card); position: relative; transition: transform .25s, border-color .25s; }
+    .pricing-card:hover { transform: translateY(-5px); }
+    .pricing-card.featured { border-color: var(--gold); background: linear-gradient(145deg, #1e1b10, var(--card)); }
+    .featured-badge { position: absolute; top: -1px; left: 50%; transform: translateX(-50%); background: var(--gold); color: var(--ink); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 500; padding: .3rem 1rem; border-radius: 0 0 4px 4px; }
+    .plan-name { font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: .8rem; }
+    .plan-price { font-family: var(--ff-head); font-size: 3rem; font-weight: 900; color: var(--cream); line-height: 1; }
+    .plan-price span { font-size: 1.1rem; color: var(--muted); font-family: var(--ff-body); font-weight: 300; }
+    .plan-desc { font-size: .88rem; color: var(--muted); margin: .8rem 0 1.8rem; }
+    .plan-divider { height: 1px; background: var(--border); margin-bottom: 1.8rem; }
+    .plan-features { list-style: none; display: flex; flex-direction: column; gap: .75rem; margin-bottom: 2rem; }
+    .plan-features li { font-size: .88rem; color: #c5bfb0; display: flex; align-items: center; gap: .7rem; }
+    .plan-features li::before { content: '✦'; color: var(--gold); font-size: .6rem; flex-shrink: 0; }
+    .plan-features li.disabled { color: var(--muted); }
+    .plan-features li.disabled::before { content: '✦'; color: #3a3530; }
+    .btn-plan { width: 100%; padding: .8rem; font-family: var(--ff-body); font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 500; cursor: pointer; border-radius: 2px; transition: .2s; }
+    .btn-plan-ghost { background: transparent; border: 1px solid var(--border); color: var(--cream); }
+    .btn-plan-ghost:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-plan-primary { background: var(--gold); border: none; color: var(--ink); }
+    .btn-plan-primary:hover { background: var(--gold2); }
+
+    #contact { background: var(--ink); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; align-items: start; max-width: 960px; margin: 0 auto; }
+    .contact-detail { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem; }
+    .contact-detail-icon { width: 40px; height: 40px; border: 1px solid var(--border); border-radius: 50%; display: grid; place-items: center; font-size: 1rem; flex-shrink: 0; }
+    .contact-detail-label { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+    .contact-detail-text { font-size: .88rem; }
+    .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .field { display: flex; flex-direction: column; gap: .4rem; }
+    .field label { font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+    .field input, .field textarea, .field select { background: var(--card); border: 1px solid var(--border); color: var(--cream); padding: .85rem 1rem; border-radius: 2px; font-family: var(--ff-body); font-size: .9rem; outline: none; transition: border-color .2s; resize: vertical; }
+    .field input:focus, .field textarea:focus { border-color: var(--gold); }
+    .field input::placeholder, .field textarea::placeholder { color: #4a4540; }
+    .submit-btn { background: var(--gold); color: var(--ink); border: none; padding: .95rem 2rem; font-family: var(--ff-body); font-size: .88rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; border-radius: 2px; align-self: flex-start; transition: background .2s, transform .15s; }
+    .submit-btn:hover { background: var(--gold2); transform: translateY(-2px); }
+
+    footer { border-top: 1px solid var(--border); padding: 3.5rem 6vw 2rem; background: #080807; }
+    .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-brand .logo { font-size: 1.3rem; display: block; margin-bottom: .9rem; }
+    .footer-brand p { color: var(--muted); font-size: .85rem; line-height: 1.8; max-width: 240px; }
+    .footer-col h4 { font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .65rem; }
+    .footer-col ul li a { color: var(--muted); text-decoration: none; font-size: .85rem; transition: color .2s; }
+    .footer-col ul li a:hover { color: var(--cream); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 1.8rem; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom p { color: var(--muted); font-size: .8rem; }
+    .social-links { display: flex; gap: 1rem; }
+    .social-links a { width: 34px; height: 34px; border: 1px solid var(--border); border-radius: 50%; display: grid; place-items: center; color: var(--muted); text-decoration: none; font-size: .85rem; transition: border-color .2s, color .2s; }
+    .social-links a:hover { border-color: var(--gold); color: var(--gold); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hero-stats { gap: 2rem; }
+      .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .footer-top { grid-template-columns: 1fr; }
+      .hero-stats { flex-direction: column; gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">Lumina</span>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get Started</button>
+</nav>
+
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+   
+    <h1 class="hero-h1">Think <em>Smarter,</em><br>Move Faster.</h1>
+    <p class="hero-sub">Lumina unifies your workflow, your team, and your data into one seamless intelligence layer. Built for those who refuse to settle.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Start Free Trial</button>
+      <button class="btn-ghost" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">See How It Works</button>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">40K+</div><div class="stat-label">Active Users</div></div>
+      <div><div class="stat-num">98%</div><div class="stat-label">Satisfaction</div></div>
+      <div><div class="stat-num">3×</div><div class="stat-label">Faster Workflow</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="features-header reveal">
+    <span class="section-tag">What We Offer</span>
+    <h2 class="section-title">Everything you need,<br>nothing you don't.</h2>
+    <p class="section-sub">Six powerful pillars that transform the way your team works — every single day.</p>
+    <div class="divider"></div>
+  </div>
+  <div class="features-grid reveal">
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Real-Time Collaboration</h3>
+      <p>Work simultaneously with your team across documents, boards, and timelines. Zero latency, infinite possibility.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔐</div>
+      <h3>Enterprise Security</h3>
+      <p>End-to-end encryption, SOC 2 Type II compliance, and granular role-based permissions built into every layer.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Smart Analytics</h3>
+      <p>AI-powered dashboards surface the insights that matter most — so decisions happen in seconds, not days.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔗</div>
+      <h3>250+ Integrations</h3>
+      <p>Connect Slack, Notion, Salesforce, Jira, and hundreds more without a single line of code.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🤖</div>
+      <h3>AI Automations</h3>
+      <p>Eliminate repetitive tasks with intelligent workflows that learn from your team's behavior over time.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🌐</div>
+      <h3>Global Infrastructure</h3>
+      <p>99.99% uptime SLA backed by multi-region redundancy. Your data is always on, always fast, always yours.</p>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="testimonials-header reveal">
+    <span class="section-tag">Testimonials</span>
+    <h2 class="section-title">Trusted by teams<br>that ship great work.</h2>
+    <p class="section-sub">Don't take our word for it — hear from the people who live inside Lumina every day.</p>
+    <div class="divider"></div>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal">
+      <div class="quote-mark">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">Lumina cut our sprint planning time in half. The AI automation alone saved us 8 hours a week — and the team actually enjoys using it, which says everything.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">SA</div>
+        <div><div class="author-name">Sara Alcott</div><div class="author-role">VP of Engineering, Finwave</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="quote-mark">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">We evaluated six platforms. Lumina was the only one that felt like it was built for how modern teams actually operate. The analytics dashboard is genuinely beautiful.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">MK</div>
+        <div><div class="author-name">Marcus Kim</div><div class="author-role">Head of Product, Arctus Labs</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="quote-mark">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">Security was non-negotiable for us. Lumina's compliance features are enterprise-grade without the enterprise complexity. Onboarding took one afternoon.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">PD</div>
+        <div><div class="author-name">Priya Deshpande</div><div class="author-role">CTO, Meridian Health</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="pricing-header reveal">
+    <span class="section-tag">Pricing</span>
+    <h2 class="section-title">Simple, honest pricing.</h2>
+    <p class="section-sub">No hidden fees, no surprise overages. Start free, scale when you're ready.</p>
+    <div class="divider"></div>
+  </div>
+  <div class="pricing-grid">
+    <div class="pricing-card reveal">
+      <div class="plan-name">Starter</div>
+      <div class="plan-price">$0 <span>/ month</span></div>
+      <div class="plan-desc">For individuals and small projects getting started.</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li>Up to 3 team members</li>
+        <li>5 active projects</li>
+        <li>Basic analytics</li>
+        <li>Community support</li>
+        <li class="disabled">AI automations</li>
+        <li class="disabled">Advanced security</li>
+      </ul>
+      <button class="btn-plan btn-plan-ghost">Get Started Free</button>
+    </div>
+    <div class="pricing-card featured reveal">
+      <div class="featured-badge">Most Popular</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-price">$49 <span>/ month</span></div>
+      <div class="plan-desc">For growing teams that need power and flexibility.</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li>Up to 25 team members</li>
+        <li>Unlimited projects</li>
+        <li>Advanced analytics</li>
+        <li>Priority support</li>
+        <li>AI automations</li>
+        <li>SOC 2 security</li>
+      </ul>
+      <button class="btn-plan btn-plan-primary">Start 14-Day Trial</button>
+    </div>
+    <div class="pricing-card reveal">
+      <div class="plan-name">Enterprise</div>
+      <div class="plan-price">Custom</div>
+      <div class="plan-desc">For organizations with advanced needs and scale.</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li>Unlimited members</li>
+        <li>Unlimited projects</li>
+        <li>Custom dashboards</li>
+        <li>Dedicated success manager</li>
+        <li>AI automations + SSO</li>
+        <li>Custom integrations</li>
+      </ul>
+      <button class="btn-plan btn-plan-ghost">Contact Sales</button>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-grid">
+    <div class="reveal">
+      <span class="section-tag">Contact Us</span>
+      <h2 style="font-family:var(--ff-head);font-size:clamp(2rem,3.5vw,2.6rem);font-weight:700;margin-bottom:1rem;line-height:1.15;">Let's build something<br>great together.</h2>
+      <p style="color:var(--muted);margin-bottom:2.5rem;">Whether you have a question, want a demo, or are ready to get started — we're here and we respond fast.</p>
+      <div class="divider"></div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">📧</div>
+        <div><div class="contact-detail-label">Email</div><div class="contact-detail-text">hello@lumina.io</div></div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">📞</div>
+        <div><div class="contact-detail-label">Phone</div><div class="contact-detail-text">+1 (888) 546-2100</div></div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">📍</div>
+        <div><div class="contact-detail-label">Office</div><div class="contact-detail-text">340 Pine St, San Francisco, CA 94104</div></div>
+      </div>
+    </div>
+    <form class="contact-form reveal" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="field"><label>First Name</label><input type="text" placeholder="Jane" required /></div>
+        <div class="field"><label>Last Name</label><input type="text" placeholder="Smith" required /></div>
+      </div>
+      <div class="field"><label>Email Address</label><input type="email" placeholder="jane@company.com" required /></div>
+      <div class="field"><label>Company</label><input type="text" placeholder="Your company name" /></div>
+      <div class="field">
+        <label>Subject</label>
+        <select>
+          <option value="" disabled selected>Select a topic…</option>
+          <option>General Inquiry</option>
+          <option>Sales / Demo Request</option>
+          <option>Technical Support</option>
+          <option>Partnership</option>
+        </select>
+      </div>
+      <div class="field"><label>Message</label><textarea rows="5" placeholder="Tell us how we can help…" required></textarea></div>
+      <button type="submit" class="submit-btn">Send Message →</button>
+      <div id="form-success" style="display:none;color:var(--gold);font-size:.88rem;margin-top:.5rem;">✦ Message sent! We'll be in touch within 24 hours.</div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="logo">Lumina</span>
+      <p>The intelligence layer for modern teams. Built for speed, designed for clarity.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Product</h4>
+      <ul>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#">Changelog</a></li>
+        <li><a href="#">Roadmap</a></li>
+        <li><a href="#">Integrations</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press Kit</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Cookie Policy</a></li>
+        <li><a href="#">Security</a></li>
+        <li><a href="#">Compliance</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Lumina Technologies, Inc. All rights reserved.</p>
+    <div class="social-links">
+      <a href="#" title="Twitter">𝕏</a>
+      <a href="#" title="LinkedIn">in</a>
+      <a href="#" title="GitHub">⌥</a>
+      <a href="#" title="Discord">◈</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => observer.observe(el));
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    document.getElementById('form-success').style.display = 'block';
+    e.target.reset();
+    setTimeout(() => document.getElementById('form-success').style.display = 'none', 5000);
+  }
+</script>
+</body>
+</html>
