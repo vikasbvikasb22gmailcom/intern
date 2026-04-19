@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Counter App</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial;
+      margin-top: 100px;
+    }
+
+    #count {
+      font-size: 60px;
+      margin: 20px;
+      color: black;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Counter App</h1>
+<div id="count">0</div>
+
+<button onclick="increase()">Increase</button>
+<button onclick="decrease()">Decrease</button>
+<button onclick="reset()">Reset</button>
+
+<script>
+  let count = 0;
+  const countDisplay = document.getElementById("count");
+
+  function updateColor() {
+    if (count > 0) {
+      countDisplay.style.color = "green";
+    } else if (count < 0) {
+      countDisplay.style.color = "red";
+    } else {
+      countDisplay.style.color = "black";
+    }
+  }
+
+  function increase() {
+    count++;
+    countDisplay.innerText = count;
+    updateColor();
+  }
+
+  function decrease() {
+    count--;
+    countDisplay.innerText = count;
+    updateColor();
+  }
+
+  function reset() {
+    count = 0;
+    countDisplay.innerText = count;
+    updateColor();
+  }
+</script>
+
+</body>
+</html>
